@@ -74,6 +74,7 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     'apps.authentication',
+    'apps.mine',
 ]
 
 AUTH_USER_MODEL = 'authentication.User'

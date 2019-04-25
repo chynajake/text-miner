@@ -27,11 +27,12 @@ from rest_framework_swagger.views import get_swagger_view
 schema_view = get_swagger_view(title='App API')
 
 patterns = [
-    path('token-auth/', obtain_jwt_token),
-    path('token-refresh/', refresh_jwt_token),
-    path('token-verify/', verify_jwt_token),
+    # path('token-auth/', obtain_jwt_token),
+    # path('token-refresh/', refresh_jwt_token),
+    # path('token-verify/', verify_jwt_token),
 
     path('authentication/', include('apps.authentication.urls')),
+    path('mine/', include('apps.mine.urls')),
 
     path('swagger/', schema_view),
 ]
@@ -44,7 +45,7 @@ if settings.DEBUG:
 
 
 urlpatterns = [
-    path('api/', include(patterns)),
+    path('', include(patterns)),
     path('admin/', admin.site.urls),
 ]
 

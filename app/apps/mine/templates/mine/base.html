@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+
+    <meta charset="utf-8">
+
+    <title>Text Miner |  {% block title %}{% endblock %}</title>
+    <link href="{% static 'base/css/bootstrap.css' %}"/>
+    <link href="{% static 'base/css/bootstrap-grid.css' %}"/>
+    <link href="{% static 'base/css/bootstrap-reboot.css' %}"/>
+
+    {% block css %}
+
+    {% endblock %}
+    <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+</head>
+
+<body>
+<div class="container">
+    <nav>
+        <div class="sidebar-collapse">
+            {% block menu %}
+            {% endblock %}
+        </div>
+    </nav>
+    {% block content %}
+    {% endblock %}
+</div>
+
+<!-- Mainly scripts -->
+<script src="{% static 'base/js/bootstrap.bundle.js' %}"></script>
+<script src="{% static 'base/js/bootstrap.js' %}"></script>
+
+{% block javascript %}{% endblock %}
+
+</body>
+</html>

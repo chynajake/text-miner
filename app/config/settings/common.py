@@ -70,6 +70,7 @@ THIRD_PARTY_APPS = [
     'rest_framework.authtoken',
     'debug_toolbar',
     'rest_framework_swagger',
+    'crispy_forms',
 ]
 
 LOCAL_APPS = [
@@ -133,6 +134,9 @@ JWT_AUTH = {
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+
+# Crispy forms
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases

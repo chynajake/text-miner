@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from django.views.generic import CreateView
 
-# Create your views here.
+from apps.mine.forms import TextForm
+
+
+class TextCreateView(CreateView):
+    form_class = TextForm
+    template_name = 'mine/text_create.html'

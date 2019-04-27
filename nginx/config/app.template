@@ -16,7 +16,7 @@ server {
         }
 
         location /public/ {
-                root    /public/;
+                root    /;
         }
 
         location /admin/ {

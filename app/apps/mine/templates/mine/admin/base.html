@@ -1,0 +1,18 @@
+{% extends "mine/base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'mine/css/base.css' %}"/>
+{% endblock %}
+
+{% block menu %}
+    <a class="nav-link" id="v-pills-home-tab" href="{% url 'mine:admin-miners' %}" role="tab" aria-controls="v-pills-home" aria-selected="true">
+        Miners
+    </a>
+    <a class="nav-link" id="v-pills-home-tab" href="{% url 'mine:admin-moderators' %}" role="tab" aria-controls="v-pills-home" aria-selected="true">
+        Moderators
+    </a>
+{% endblock %}
+
+{% block content %}
+{% endblock %}

@@ -5,6 +5,12 @@
     <link rel="stylesheet" href="{% static 'authentication/css/base.css' %}"/>
 {% endblock %}
 
+{% block navigation %}
+    <li class="nav-item active">
+        <a class="nav-link" href="#TODO">About</a>
+    </li>
+{% endblock %}
+
 {% block topright %}
     <a href="###"><button class="btn btn-outline-info" type="submit">Sign In</button></a>
     <a href="{% url 'authentication:registration' %}"><button class="btn btn-outline-info" type="submit">Sign Up</button></a>

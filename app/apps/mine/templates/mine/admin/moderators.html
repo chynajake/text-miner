@@ -1,0 +1,26 @@
+{% extends "mine/admin/base.html" %}
+
+{% block content %}
+    <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th>#</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>email</th>
+            <th>phone</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for miner in object_list %}
+          <tr>
+            <td>{{ miner.id }}</td>
+            <td>{{ miner.first_name }}</td>
+            <td>{{ miner.last_name }}</td>
+            <td>{{ miner.email }}</td>
+            <td>{{ miner.phone }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

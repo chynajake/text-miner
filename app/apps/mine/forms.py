@@ -16,6 +16,6 @@ class TextForm(forms.ModelForm):
 
     class Meta:
         model = Text
-        fields = '__all__'
+        fields = ('content', )
 
 

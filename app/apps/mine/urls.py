@@ -1,8 +1,19 @@
 from django.urls import path
 
-from apps.mine.views import TextCreateView
+from apps.mine import views
 
 app_name = 'mine'
 urlpatterns = [
-    path('text/create/', TextCreateView.as_view(), name='text-create'),
+    path('text/create/', views.TextCreateView.as_view(), name='text-create'),
 ]
+
+admin_patterns = [
+    path('admin/', views.AdminInitialView.as_view(), name='admin-initial'),
+    path('admin/miners/', views.AdminMinerListView.as_view(), name='admin-miners'),
+    path('admin/miners/', views.AdminModeratorListView.as_view(), name='admin-moderators'),
+]
+moderator_patterns = []
+miner_patterns = []
+urlpatterns += admin_patterns
+urlpatterns += moderator_patterns
+urlpatterns += miner_patterns

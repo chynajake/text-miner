@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <title>Text Miner |  {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'base/css/bootstrap.css' %}"/>
+    <link rel="stylesheet" href="{% static 'base/css/bootstrap-grid.css' %}"/>
+    <link rel="stylesheet" href="{% static 'base/css/bootstrap-reboot.css' %}"/>
+    <link rel="stylesheet" href="{% static 'base/css/base.css' %}"/>
+
+    {% block css %}
+
+    {% endblock %}
+    <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+</head>
+
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 navigation-block">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+              <a class="navbar-brand" href="{% url 'initial' %}">
+                <img src="{% static 'base/img/logo.png' %}" width="30" height="30" alt="">
+              </a>
+              <a class="navbar-brand" href="{% url 'initial' %}">Text Miner</a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                  <li class="nav-item active">
+                    <a class="nav-link" href="#TODO">About</a>
+                  </li>
+                  {% block navigation %}
+                  {% endblock %}
+                </ul>
+                <div class="form-inline my-2 my-lg-0">
+                  {% block topright %}
+                  {% endblock %}
+                </div>
+              </div>
+            </nav>
+        </div>
+    </div>
+    <div class="row stage-block">
+        {% block stage %}
+        {% endblock %}
+    </div>
+</div>
+
+<!-- Mainly scripts -->
+<script src="{% static 'base/js/bootstrap.bundle.js' %}"></script>
+<script src="{% static 'base/js/bootstrap.js' %}"></script>
+
+{% block javascript %}{% endblock %}
+
+</body>
+</html>

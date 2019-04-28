@@ -16,3 +16,8 @@ from django.utils import timezone
 #     # TODO remove me
 #     print('hello world')
 #     return 'hello world'
+
+
+@shared_task
+def send_activation_link(user_id):
+    print('send mail')

@@ -17,24 +17,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework_jwt.views import (
-    obtain_jwt_token,
-    refresh_jwt_token,
-    verify_jwt_token,
-)
-from rest_framework_swagger.views import get_swagger_view
 
-schema_view = get_swagger_view(title='App API')
+from apps.authentication.views import InitialView
 
 patterns = [
-    # path('token-auth/', obtain_jwt_token),
-    # path('token-refresh/', refresh_jwt_token),
-    # path('token-verify/', verify_jwt_token),
-
+    path('', InitialView.as_view(), name='initial'),
     path('authentication/', include('apps.authentication.urls')),
     path('mine/', include('apps.mine.urls')),
-
-    path('swagger/', schema_view),
 ]
 
 if settings.DEBUG:

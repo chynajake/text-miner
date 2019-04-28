@@ -1,84 +1,35 @@
-<!DOCTYPE html>
-<html>
+{% extends "base/base.html" %}
 {% load static %}
-<head>
 
-    <meta charset="utf-8">
+{% block css %}
+<link rel="stylesheet" href="{% static 'mine/css/base.css' %}"/>
+{% endblock %}
 
-    <title>Text Miner |  {% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'base/css/bootstrap.css' %}"/>
-    <link rel="stylesheet" href="{% static 'base/css/bootstrap-grid.css' %}"/>
-    <link rel="stylesheet" href="{% static 'base/css/bootstrap-reboot.css' %}"/>
-    <link rel="stylesheet" href="{% static 'base/css/base.css' %}"/>
+{% block topright %}
+Some shit
+{% endblock %}
 
-    {% block css %}
-
-    {% endblock %}
-    <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
-</head>
-
-<body>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12 navigation-block">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-              <a class="navbar-brand" href="#">
-                <img src="/docs/4.3/assets/brand/bootstrap-solid.svg" width="30" height="30" alt="">
-              </a>
-              <a class="navbar-brand" href="#">Text Miner</a>
-              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                  <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                  </li>
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Dropdown
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                  </li>
-                </ul>
-                {% block menu %}
-                    {% endblock %}
-                <div class="form-inline my-2 my-lg-0">
-                  <a href="###"><button class="btn btn-outline-success" type="submit">Sign In</button></a>
-                  <a href="{% url "registration" %}"><button class="btn btn-outline-success" type="submit">Sign Up</button></a>
-                </div>
-              </div>
-            </nav>
-
+{% block stage %}
+    <div class="col-3 menu-block">
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+          <a class="nav-link" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">
+              Home
+          </a>
+          <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">
+              Profile
+          </a>
+          <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">
+              Messages
+          </a>
+          <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">
+              Settings
+          </a>
         </div>
+        {% block menu %}
+        {% endblock %}
     </div>
-    <div class="row">
-        <div class="col-3 menu-block"></div>
-        <div class="col-9 content-block">
-            {% block content %}
-            {% endblock %}
-        </div>
+    <div class="col-9 content-block">
+        {% block content %}
+        {% endblock %}
     </div>
-
-</div>
-
-<!-- Mainly scripts -->
-<script src="{% static 'base/js/bootstrap.bundle.js' %}"></script>
-<script src="{% static 'base/js/bootstrap.js' %}"></script>
-
-{% block javascript %}{% endblock %}
-
-</body>
-</html>
+{% endblock %}

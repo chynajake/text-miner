@@ -17,7 +17,11 @@ class UserCreationForm(forms.ModelForm):
         # self.helper.form_id = 'id-offline-ticket'
         # self.helper.form_class = 'OfflineTicket'
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', u'Отправить'))
+        self.helper.add_input(Submit('submit', u'Submit'))
+        self.fields['email'].required = True
+        self.fields['phone'].required = True
+        self.fields['first_name'].required = True
+        self.fields['last_name'].required = True
 
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Password confirmation',

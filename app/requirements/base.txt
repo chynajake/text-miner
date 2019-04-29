@@ -18,3 +18,4 @@ Werkzeug==0.14.1
 celery==4.2.1
 psycopg2-binary==2.7.5
 django-crispy-forms==1.7.2
+django-braces==1.13.0

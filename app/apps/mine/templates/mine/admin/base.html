@@ -6,10 +6,16 @@
 {% endblock %}
 
 {% block menu %}
-    <a class="nav-link" id="v-pills-home-tab" href="{% url 'mine:admin-miners' %}" role="tab" aria-controls="v-pills-home" aria-selected="true">
+    <a class="nav-link" href="{% url 'mine:admin-raw-texts' %}">
+        Raw data
+    </a>
+    <a class="nav-link" href="#TODO">
+        Moderated Text
+    </a>
+    <a class="nav-link" href="{% url 'mine:admin-miners' %}">
         Miners
     </a>
-    <a class="nav-link" id="v-pills-home-tab" href="{% url 'mine:admin-moderators' %}" role="tab" aria-controls="v-pills-home" aria-selected="true">
+    <a class="nav-link" href="{% url 'mine:admin-moderators' %}">
         Moderators
     </a>
 {% endblock %}

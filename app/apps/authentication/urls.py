@@ -4,5 +4,7 @@ from apps.authentication.views import RegistrationView
 
 app_name = 'authentication'
 urlpatterns = [
-    path('register/', RegistrationView.as_view(), name='registration'),
+    path('signup/', RegistrationView.as_view(), name='registration'),
+    # TODO activate by email stuff
+    # path('signin/', )
 ]

@@ -1,0 +1,29 @@
+{% extends "mine/admin/base.html" %}
+
+{% block content %}
+    <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th>#</th>
+            <th>Content</th>
+            <th>Creator</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for text in object_list %}
+          <tr>
+            <td>{{ text.id }}</td>
+            <td>{{ text.short_text }}</td>
+            <td>{{ text.creator.email }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div>
+        <a href="{% url 'mine:admin-raw-text-create' %}">
+            <button type="button" class="btn btn-primary btn-lg btn-block">
+                Add text
+            </button>
+        </a>
+    </div>
+{% endblock %}

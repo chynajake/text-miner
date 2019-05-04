@@ -1,0 +1,24 @@
+{% extends "mine/base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'mine/css/base.css' %}"/>
+{% endblock %}
+
+{% block menu %}
+    <a class="nav-link" href="{% url 'mine:admin-raw-texts' %}">
+        Raw data
+    </a>
+    <a class="nav-link" href="#TODO">
+        Moderated Text
+    </a>
+    <a class="nav-link" href="{% url 'mine:admin-miners' %}">
+        Miners
+    </a>
+    <a class="nav-link" href="{% url 'mine:admin-moderators' %}">
+        Moderators
+    </a>
+{% endblock %}
+
+{% block content %}
+{% endblock %}

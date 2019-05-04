@@ -15,9 +15,11 @@ class RegistrationView(CreateView):
     success_url = reverse_lazy('initial')
 
     def form_valid(self, form):
-        messages.success(self.request, 'success')
         return super(RegistrationView, self).form_valid(form)
 
     def form_invalid(self, form):
-        messages.success(self.request, 'failure')
         return super(RegistrationView, self).form_invalid(form)
+
+
+class SignInView(TemplateView):
+    template_name = ''

@@ -8,7 +8,7 @@ class Text(models.Model):
 
     @property
     def short_text(self):
-        return self.content[:40]
+        return '{}...'.format(self.content[:40])
 
     def __str__(self):
         return '{} - {}'.format(self.pk, self.creator.email)

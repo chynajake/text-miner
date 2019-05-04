@@ -5,7 +5,7 @@ from django.contrib.auth.models import Group
 from apps.authentication.models import User
 
 from django import forms
-from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib.auth.forms import ReadOnlyPasswordHashField, AuthenticationForm
 
 
 class UserCreationForm(forms.ModelForm):
@@ -19,7 +19,7 @@ class UserCreationForm(forms.ModelForm):
         # self.helper.form_id = 'id-offline-ticket'
         # self.helper.form_class = 'OfflineTicket'
         self.helper.form_method = 'post'
-        self.helper.add_input(Submit('submit', u'Submit'))
+        self.helper.add_input(Submit('submit', 'Sign Up'))
         self.fields['email'].required = True
         self.fields['phone'].required = True
         self.fields['first_name'].required = True
@@ -122,3 +122,11 @@ class UserChangeForm(forms.ModelForm):
             if commit:
                 user.save()
         return user
+
+
+class UserAuthForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super(UserAuthForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.add_input(Submit('submit', 'Sign In'))

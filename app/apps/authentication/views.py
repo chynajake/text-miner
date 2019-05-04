@@ -1,8 +1,9 @@
 from django.contrib import messages
+from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView
 
-from apps.authentication.forms import UserCreationForm
+from apps.authentication.forms import UserCreationForm, UserAuthForm
 
 
 class InitialView(TemplateView):
@@ -21,5 +22,14 @@ class RegistrationView(CreateView):
         return super(RegistrationView, self).form_invalid(form)
 
 
-class SignInView(TemplateView):
-    template_name = ''
+class SignInView(LoginView):
+    template_name = 'authentication/signin.html'
+    form_class = UserAuthForm
+
+    def get_success_url(self):
+        return reverse_lazy('initial') # TODO create proxy view to cabinets
+
+
+class ExitView(LogoutView):
+    def get_next_page(self):
+        return reverse_lazy('initial')

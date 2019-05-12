@@ -9,8 +9,10 @@ urlpatterns = [
 
 admin_patterns = [
     path('admin/', views.AdminInitialView.as_view(), name='admin-initial'),
-    path('admin/raw_texts/', views.AdminRawTextListView.as_view(), name='admin-raw-texts'),
-    path('admin/raw_texts/create/', views.AdminRawTextCreateView.as_view(), name='admin-raw-text-create'),
+    path('admin/texts/', views.AdminRawTextListView.as_view(), name='admin-raw-texts'),
+    path('admin/texts/create/', views.AdminRawTextCreateView.as_view(), name='admin-raw-text-create'),
+    path('admin/texts/<int:pk>/moderate/', views.AdminModerateTextView.as_view(), name='admin-raw-text-moderate'),
+    path('admin/texts/moderated/', views.AdminModeratedTextListView.as_view(), name='admin-moderated-text'),
     path('admin/miners/', views.AdminMinerListView.as_view(), name='admin-miners'),
     path('admin/moderators/', views.AdminModeratorListView.as_view(), name='admin-moderators'),
 ]

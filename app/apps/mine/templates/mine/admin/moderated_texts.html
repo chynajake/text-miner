@@ -1,0 +1,24 @@
+{% extends "mine/admin/base.html" %}
+
+{% block content %}
+    <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th>#</th>
+            <th>Original</th>
+            <th>Content</th>
+            <th>Moderator</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for text in object_list %}
+          <tr>
+            <td>{{ text.id }}</td>
+            <td>TODO</td>
+            <td>{{ text.short_text }}</td>
+            <td>{{ text.moderator.email }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

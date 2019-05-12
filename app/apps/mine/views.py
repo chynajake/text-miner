@@ -1,12 +1,13 @@
 from braces.views import GroupRequiredMixin as BaseGroupRequiredMixin, SuperuserRequiredMixin
 from django.db.models import Q
+from django.http import Http404
 
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView, ListView
 
 from apps.authentication.models import User
-from apps.mine.forms import TextForm
-from apps.mine.models import Text
+from apps.mine.forms import TextForm, ModerateTextForm
+from apps.mine.models import Text, ModeratedText
 
 
 class TextCreateView(CreateView):
@@ -50,6 +51,45 @@ class AdminMinerListView(BaseAdminView, ListView):
 class AdminModeratorListView(BaseAdminView, ListView):
     template_name = 'mine/admin/moderators.html'
     queryset = User.objects.filter(Q(is_superuser=True) | Q(groups__name='moderator')).order_by('id')
+
+
+class AdminModerateTextView(BaseAdminView, CreateView):
+    form_class = ModerateTextForm
+    template_name = 'mine/admin/text_moderate.html'
+    success_url = reverse_lazy('mine:admin-moderated-text')
+    initial_text = None
+
+    def get(self, request, *args, **kwargs):
+        self.get_initial_text(kwargs.get('pk'))
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        self.get_initial_text(kwargs.get('pk'))
+        return super().post(request, *args, **kwargs)
+
+    def get_initial_text(self, pk):
+        text = Text.objects.filter(pk=pk)
+        if not text.exists():
+            raise Http404
+        self.initial_text = text.first()
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        if self.request.method == 'GET':
+            kwargs.update({'initial_text': self.initial_text.content})
+        return kwargs
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.raw_text = self.initial_text
+        self.object.moderator = self.request.user
+        self.object.save()
+        return super().form_valid(form)
+
+
+class AdminModeratedTextListView(BaseAdminView, ListView):
+    template_name = 'mine/admin/moderated_texts.html'
+    queryset = ModeratedText.objects.all()
 
 
 # Moderator views

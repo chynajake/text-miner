@@ -97,6 +97,11 @@ class AdminModeratedTextListView(BaseAdminView, ListView):
     queryset = ModeratedText.objects.all()
 
 
+class AdminModeratedTextDetailView(BaseAdminView, DetailView):
+    template_name = 'mine/admin/moderated_text.html'
+    queryset = ModeratedText.objects.all()
+
+
 # Moderator views
 class BaseModeratorView(BaseGroupRequiredMixin):
     group_required = 'moderator'

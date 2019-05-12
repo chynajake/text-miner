@@ -14,6 +14,7 @@ admin_patterns = [
     path('admin/texts/<int:pk>/', views.AdminRawTextDetailView.as_view(), name='admin-raw-text-detail'),
     path('admin/texts/<int:pk>/moderate/', views.AdminModerateTextView.as_view(), name='admin-raw-text-moderate'),
     path('admin/texts/moderated/', views.AdminModeratedTextListView.as_view(), name='admin-moderated-text'),
+    path('admin/texts/moderated/<int:pk>/', views.AdminModeratedTextDetailView.as_view(), name='admin-moderated-text-detail'),
     path('admin/miners/', views.AdminMinerListView.as_view(), name='admin-miners'),
     path('admin/moderators/', views.AdminModeratorListView.as_view(), name='admin-moderators'),
 ]

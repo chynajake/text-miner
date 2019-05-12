@@ -3,7 +3,7 @@ from django.db.models import Q
 from django.http import Http404
 
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, TemplateView, ListView
+from django.views.generic import CreateView, TemplateView, ListView, DetailView
 
 from apps.authentication.models import User
 from apps.mine.forms import TextForm, ModerateTextForm
@@ -37,6 +37,11 @@ class AdminRawTextCreateView(BaseAdminView, CreateView):
         self.object.creator = self.request.user
         self.object.save()
         return super().form_valid(form)
+
+
+class AdminRawTextDetailView(BaseAdminView, DetailView):
+    queryset = Text.objects.all()
+    template_name = 'mine/admin/raw_text.html'
 
 
 class AdminInitialView(BaseAdminView, TemplateView):

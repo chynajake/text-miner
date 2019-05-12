@@ -14,7 +14,7 @@
         {% for text in object_list %}
           <tr>
             <td>{{ text.id }}</td>
-            <td>TODO</td>
+            <td><a href="{% url 'mine:admin-raw-text-detail' text.raw_text.pk %}">reference</a></td>
             <td>{{ text.short_text }}</td>
             <td>{{ text.moderator.email }}</td>
           </tr>

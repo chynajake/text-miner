@@ -11,10 +11,15 @@ from apps.mine.forms import TextForm, ModerateTextForm
 from apps.mine.models import Text, ModeratedText
 
 
-class TextCreateView(CreateView):
+class BaseTextCreateView(CreateView):
     form_class = TextForm
-    template_name = 'mine/text_create.html'
-    success_url = reverse_lazy('initial')
+
+    def form_valid(self, form):
+        """If the form is valid, save the associated model."""
+        self.object = form.save()
+        self.object.creator = self.request.user
+        self.object.save()
+        return super().form_valid(form)
 
 
 # Admin views
@@ -27,17 +32,9 @@ class AdminRawTextListView(BaseAdminView, ListView):
     queryset = Text.objects.all()
 
 
-class AdminRawTextCreateView(BaseAdminView, CreateView):
-    form_class = TextForm
+class AdminRawTextCreateView(BaseAdminView, BaseTextCreateView):
     template_name = 'mine/admin/raw_text_create.html'
     success_url = reverse_lazy('mine:admin-raw-texts')
-
-    def form_valid(self, form):
-        """If the form is valid, save the associated model."""
-        self.object = form.save()
-        self.object.creator = self.request.user
-        self.object.save()
-        return super().form_valid(form)
 
 
 class AdminRawTextDetailView(BaseAdminView, DetailView):
@@ -137,6 +134,29 @@ class BaseMinerView(BaseGroupRequiredMixin):
     group_required = 'miner'
 
 
-class MinerRawTextListView(BaseMinerView):
-    template_name = 'mine/admin/raw_texts.html'
+class MinerInitialView(BaseMinerView, TemplateView):
+    template_name = 'mine/miner/initial.html'
+
+
+class MinerRawTextListView(BaseMinerView, ListView):
+    template_name = 'mine/miner/raw_texts.html'
     queryset = Text.objects.all()
+
+
+class MinerRawTextCreateView(BaseMinerView, BaseTextCreateView):
+    template_name = 'mine/miner/raw_text_create.html'
+    success_url = reverse_lazy('mine:miner-raw-texts')
+
+
+class MinerRawTextDetailView(BaseMinerView, DetailView):
+    queryset = Text.objects.all()
+    template_name = 'mine/miner/raw_text.html'
+
+
+class MinerProfileView(BaseMinerView, UpdateView):
+    form_class = ProfileForm
+    template_name = 'mine/miner/profile.html'
+    success_url = reverse_lazy('mine:miner-profile')
+
+    def get_object(self, queryset=None):
+        return self.request.user

@@ -4,7 +4,6 @@ from apps.mine import views
 
 app_name = 'mine'
 urlpatterns = [
-    path('text/create/', views.TextCreateView.as_view(), name='text-create'),
 ]
 
 admin_patterns = [
@@ -22,7 +21,13 @@ admin_patterns = [
 ]
 moderator_patterns = [
 ]
-miner_patterns = []
+miner_patterns = [
+    path('miner/', views.MinerInitialView.as_view(), name='miner-initial'),
+    path('miner/texts/', views.MinerRawTextListView.as_view(), name='miner-raw-texts'),
+    path('miner/texts/create/', views.MinerRawTextCreateView.as_view(), name='miner-raw-text-create'),
+    path('miner/texts/<int:pk>/', views.MinerRawTextDetailView.as_view(), name='miner-raw-text-detail'),
+    path('miner/profile/', views.MinerProfileView.as_view(), name='miner-profile')
+]
 urlpatterns += admin_patterns
 urlpatterns += moderator_patterns
 urlpatterns += miner_patterns

@@ -1,4 +1,4 @@
-{% extends "mine/admin/base.html" %}
+{% extends "mine/miner/base.html" %}
 
 {% block content %}
     <table class="table">
@@ -12,7 +12,7 @@
         <tbody>
         {% for text in object_list %}
           <tr>
-            <td>{{ text.id }}</td>
+            <td><a href="{% url 'mine:admin-raw-text-detail' text.pk %}">{{ text.pk }}</a></td>
             <td>{{ text.short_text }}</td>
             <td>{{ text.creator.email }}</td>
           </tr>

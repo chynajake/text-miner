@@ -3,8 +3,9 @@ from django.db.models import Q
 from django.http import Http404
 
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, TemplateView, ListView, DetailView
+from django.views.generic import CreateView, TemplateView, ListView, DetailView, RedirectView, UpdateView
 
+from apps.authentication.forms import ProfileForm
 from apps.authentication.models import User
 from apps.mine.forms import TextForm, ModerateTextForm
 from apps.mine.models import Text, ModeratedText
@@ -58,6 +59,21 @@ class AdminModeratorListView(BaseAdminView, ListView):
     queryset = User.objects.filter(Q(is_superuser=True) | Q(groups__name='moderator')).order_by('id')
 
 
+class AdminUserActivateView(BaseAdminView, RedirectView):
+    url = reverse_lazy('mine:admin-initial')
+
+    def get(self, request, *args, **kwargs):
+        users = User.objects.filter(pk=kwargs['pk'])
+        if users.exists():
+            user = users.first()
+            user.is_active = not user.is_active
+            user.save()
+            miner_url = reverse_lazy('mine:admin-miners')
+            moderator_url = reverse_lazy('mine:admin-moderators')
+            self.url = miner_url if user.groups.filter(name='miner').exists() else moderator_url
+        return super().get(request, *args, **kwargs)
+
+
 class AdminModerateTextView(BaseAdminView, CreateView):
     form_class = ModerateTextForm
     template_name = 'mine/admin/text_moderate.html'
@@ -100,6 +116,15 @@ class AdminModeratedTextListView(BaseAdminView, ListView):
 class AdminModeratedTextDetailView(BaseAdminView, DetailView):
     template_name = 'mine/admin/moderated_text.html'
     queryset = ModeratedText.objects.all()
+
+
+class AdminProfileView(BaseAdminView, UpdateView):
+    form_class = ProfileForm
+    template_name = 'mine/admin/profile.html'
+    success_url = reverse_lazy('mine:admin-profile')
+
+    def get_object(self, queryset=None):
+        return self.request.user
 
 
 # Moderator views

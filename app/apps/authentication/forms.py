@@ -102,7 +102,7 @@ class UserChangeForm(forms.ModelForm):
         # Regardless of what the user provides, return the initial value.
         # This is done here, rather than on the field, because the
         # field does not have access to the initial value
-        return self.initial["password"]
+        return self.initial.get("password")
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -130,3 +130,16 @@ class UserAuthForm(AuthenticationForm):
         self.helper = FormHelper()
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Sign In'))
+
+
+class ProfileForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ProfileForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.add_input(Submit('submit', 'Save'))
+
+    class Meta:
+        model = User
+        fields = ('email', 'first_name',
+                  'last_name', 'phone')

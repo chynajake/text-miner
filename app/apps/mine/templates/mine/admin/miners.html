@@ -9,6 +9,8 @@
             <th>Last name</th>
             <th>email</th>
             <th>phone</th>
+            <th>status</th>
+            <th>approve</th>
           </tr>
         </thead>
         <tbody>
@@ -19,6 +21,20 @@
             <td>{{ miner.last_name }}</td>
             <td>{{ miner.email }}</td>
             <td>{{ miner.phone }}</td>
+            <td>{% if miner.is_active %}active{% else %}disabled{% endif %}</td>
+            <td>
+              {% if miner != user %}
+              {% if not miner.is_active%}
+                <a href="{% url 'mine:admin-user-turn' miner.pk %}">
+                  approve
+                </a>
+              {% else %}
+                <a href="{% url 'mine:admin-user-turn' miner.pk %}">
+                  disable
+                </a>
+              {% endif %}
+              {% endif %}
+            </td>
           </tr>
         {% endfor %}
         </tbody>

@@ -16,7 +16,7 @@
             <td><a href="{% url 'mine:admin-raw-text-detail' text.pk %}">{{ text.pk }}</a></td>
             <td>{{ text.short_text }}</td>
             <td>{{ text.creator.email }}</td>
-            <td><a href="{% url 'mine:admin-raw-text-moderate' text.pk %}"><i class="fas fa-pen-fancy"></i></a></td>
+            <td><a href="{% url 'mine:admin-raw-text-moderate' text.pk %}">moderate</a></td>
           </tr>
         {% endfor %}
         </tbody>

@@ -20,6 +20,13 @@ admin_patterns = [
     path('admin/profile/', views.AdminProfileView.as_view(), name='admin-profile')
 ]
 moderator_patterns = [
+    path('moderator/', views.ModeratorInitialView.as_view(), name='moderator-initial'),
+    path('moderator/texts/', views.ModeratorRawTextListView.as_view(), name='moderator-raw-texts'),
+    path('moderator/texts/<int:pk>/', views.ModeratorRawTextDetailView.as_view(), name='moderator-raw-text-detail'),
+    path('moderator/texts/<int:pk>/moderate/', views.ModeratorModerateTextView.as_view(), name='moderator-raw-text-moderate'),
+    path('moderator/texts/moderated/', views.ModeratorModeratedTextListView.as_view(), name='moderator-moderated-text'),
+    path('moderator/texts/moderated/<int:pk>/', views.ModeratorModeratedTextDetailView.as_view(), name='moderator-moderated-text-detail'),
+    path('moderator/profile/', views.ModeratorProfileView.as_view(), name='moderator-profile')
 ]
 miner_patterns = [
     path('miner/', views.MinerInitialView.as_view(), name='miner-initial'),

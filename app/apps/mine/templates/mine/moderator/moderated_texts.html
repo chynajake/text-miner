@@ -1,4 +1,4 @@
-{% extends "mine/admin/base.html" %}
+{% extends "mine/moderator/base.html" %}
 
 {% block content %}
     <table class="table">
@@ -14,10 +14,10 @@
         <tbody>
         {% for text in object_list %}
           <tr>
-            <td><a href="{% url 'mine:admin-moderated-text-detail' text.pk %}">{{ text.id }}</a></td>
-            <td><a href="{% url 'mine:admin-raw-text-detail' text.raw_text.pk %}">reference</a></td>
+            <td><a href="{% url 'mine:moderator-moderated-text-detail' text.pk %}">{{ text.id }}</a></td>
+            <td><a href="{% url 'mine:moderator-raw-text-detail' text.raw_text.pk %}">reference</a></td>
             <td>{{ text.short_text }}</td>
-              <td>{{ text.raw_text.creator }}</td>
+            <td>{{ text.raw_text.creator }}</td>
             <td>{{ text.moderator.email }}</td>
           </tr>
         {% endfor %}

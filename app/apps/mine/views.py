@@ -22,6 +22,40 @@ class BaseTextCreateView(CreateView):
         return super().form_valid(form)
 
 
+class BaseTextModerationView(CreateView):
+    form_class = ModerateTextForm
+    template_name = None
+    success_url = None
+    initial_text = None
+
+    def get(self, request, *args, **kwargs):
+        self.get_initial_text(kwargs.get('pk'))
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        self.get_initial_text(kwargs.get('pk'))
+        return super().post(request, *args, **kwargs)
+
+    def get_initial_text(self, pk):
+        text = Text.objects.filter(pk=pk)
+        if not text.exists():
+            raise Http404
+        self.initial_text = text.first()
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        if self.request.method == 'GET':
+            kwargs.update({'initial_text': self.initial_text.content})
+        return kwargs
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.raw_text = self.initial_text
+        self.object.moderator = self.request.user
+        self.object.save()
+        return super().form_valid(form)
+
+
 # Admin views
 class BaseAdminView(SuperuserRequiredMixin):
     pass
@@ -71,38 +105,9 @@ class AdminUserActivateView(BaseAdminView, RedirectView):
         return super().get(request, *args, **kwargs)
 
 
-class AdminModerateTextView(BaseAdminView, CreateView):
-    form_class = ModerateTextForm
+class AdminModerateTextView(BaseAdminView, BaseTextModerationView):
     template_name = 'mine/admin/text_moderate.html'
     success_url = reverse_lazy('mine:admin-moderated-text')
-    initial_text = None
-
-    def get(self, request, *args, **kwargs):
-        self.get_initial_text(kwargs.get('pk'))
-        return super().get(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        self.get_initial_text(kwargs.get('pk'))
-        return super().post(request, *args, **kwargs)
-
-    def get_initial_text(self, pk):
-        text = Text.objects.filter(pk=pk)
-        if not text.exists():
-            raise Http404
-        self.initial_text = text.first()
-
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        if self.request.method == 'GET':
-            kwargs.update({'initial_text': self.initial_text.content})
-        return kwargs
-
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.raw_text = self.initial_text
-        self.object.moderator = self.request.user
-        self.object.save()
-        return super().form_valid(form)
 
 
 class AdminModeratedTextListView(BaseAdminView, ListView):
@@ -127,6 +132,50 @@ class AdminProfileView(BaseAdminView, UpdateView):
 # Moderator views
 class BaseModeratorView(BaseGroupRequiredMixin):
     group_required = 'moderator'
+
+
+class ModeratorInitialView(BaseModeratorView, TemplateView):
+    template_name = 'mine/moderator/initial.html'
+
+
+class ModeratorRawTextListView(BaseModeratorView, ListView):
+    template_name = 'mine/moderator/raw_texts.html'
+    queryset = Text.objects.all()
+
+
+class ModeratorRawTextDetailView(BaseModeratorView, DetailView):
+    queryset = Text.objects.all()
+    template_name = 'mine/moderator/raw_text.html'
+
+
+class ModeratorModerateTextView(BaseModeratorView, BaseTextModerationView):
+    template_name = 'mine/moderator/text_moderate.html'
+    success_url = reverse_lazy('mine:moderator-moderated-text')
+
+
+class ModeratorModeratedTextListView(BaseModeratorView, ListView):
+    template_name = 'mine/moderator/moderated_texts.html'
+    queryset = ModeratedText.objects.all()
+
+    def get_queryset(self):
+        return self.queryset.filter(moderator=self.request.user)
+
+
+class ModeratorModeratedTextDetailView(BaseModeratorView, DetailView):
+    template_name = 'mine/moderator/moderated_text.html'
+    queryset = ModeratedText.objects.all()
+
+    def get_queryset(self):
+        return self.queryset.filter(moderator=self.request.user)
+
+
+class ModeratorProfileView(BaseModeratorView, UpdateView):
+    form_class = ProfileForm
+    template_name = 'mine/moderator/profile.html'
+    success_url = reverse_lazy('mine:moderator-profile')
+
+    def get_object(self, queryset=None):
+        return self.request.user
 
 
 # Miner views

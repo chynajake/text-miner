@@ -24,6 +24,7 @@ patterns = [
     path('', InitialView.as_view(), name='initial'),
     path('authentication/', include('apps.authentication.urls')),
     path('mine/', include('apps.mine.urls')),
+    path('social/', include('social_django.urls', namespace='social')),
 ]
 
 if settings.DEBUG:
